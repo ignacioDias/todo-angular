@@ -1,59 +1,98 @@
 # Todo
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.2.6.
+A small task manager built with Angular 22. Tasks can be created, edited, completed, and removed. State is held in memory with signals, so the list resets when the page is reloaded.
 
-## Development server
+## Features
 
-To start a local development server, run:
+- Create tasks through a modal dialog with title, description, and priority (low / medium / high)
+- Edit existing tasks in the same dialog
+- Mark tasks as complete or incomplete
+- Delete tasks
+- Empty state when no tasks exist
+- Keyboard-accessible native `<dialog>` with focus handling and reduced-motion support
+
+The interface copy is in Spanish.
+
+## Tech stack
+
+| Concern    | Choice                                            |
+| ---------- | ------------------------------------------------- |
+| Framework  | Angular 22 (standalone components, signals)       |
+| Styling    | Tailwind CSS 4 + component-scoped CSS             |
+| UI icons   | Angular Material (`MatIconModule`)                |
+| Forms      | Reactive Forms                                    |
+| Tests      | Vitest with jsdom                                 |
+| Tooling    | Angular CLI, Prettier                             |
+
+## Getting started
+
+Install dependencies:
 
 ```bash
-ng serve
+npm install
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Start the dev server:
+
+```bash
+npm start
+```
+
+Then open `http://localhost:4200/`. The app reloads automatically when source files change.
+
+## Scripts
+
+| Command         | Description                                      |
+| --------------- | ------------------------------------------------ |
+| `npm start`     | Run the development server                       |
+| `npm run build` | Production build into `dist/`                    |
+| `npm run watch` | Development build in watch mode                  |
+| `npm test`      | Run unit tests with Vitest                       |
+| `npm run ng`    | Invoke the Angular CLI directly (`npm run ng -- …`) |
+
+## Project structure
+
+```
+src/
+├── app/
+│   ├── app.ts                    # Root component
+│   ├── app.config.ts             # Application providers (router, error listeners)
+│   ├── app.routes.ts             # Route definitions (currently empty)
+│   ├── header/                   # Toolbar with the "Crear Tarea" action
+│   └── tasks/
+│       ├── task.ts               # Task model and priority type
+│       ├── task-store.ts         # Signal-based in-memory task store
+│       ├── task-grid/            # Grid of task cards + empty state
+│       ├── task-card/            # Single task with edit / delete / complete actions
+│       └── task-dialog/          # Create and edit dialog (reactive form)
+├── material-theme.scss
+├── styles.css                    # Design tokens and global styles
+└── main.ts                       # Bootstrap entry point
+```
+
+## State management
+
+`TaskStore` is a root service holding tasks in a `signal<Map<number, Task>>`. It exposes `addTask`, `updateTask`, `removeTask`, and `toggleTaskCompletion`, all of which replace the map immutably so signal consumers update correctly. Components inject the store and read the `tasks` signal directly.
+
+Because the store lives in memory, tasks are not persisted between reloads.
 
 ## Code scaffolding
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+To generate a new component:
 
 ```bash
-ng generate component component-name
+npm run ng -- generate component component-name
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+For the full list of available schematics:
 
 ```bash
-ng generate --help
+npm run ng -- generate --help
 ```
 
-## Building
+## Additional resources
 
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- [Angular documentation](https://angular.dev/)
+- [Angular CLI command reference](https://angular.dev/tools/cli)
+- [Tailwind CSS documentation](https://tailwindcss.com/docs)
+- [Vitest documentation](https://vitest.dev/)
