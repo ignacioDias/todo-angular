@@ -9,9 +9,37 @@ import { signal } from '@angular/core';
   templateUrl: './task-grid.html',
 })
 export class TaskGrid {
-  protected readonly tasks = signal<Task[]>([
-    { id: 1, title: 'Tarea 1', description: 'Descripción de la tarea 1' , isCompleted: false, priority: 'medium'},
-    { id: 2, title: 'Tarea 2', description: 'Descripción de la tarea 2' , isCompleted: false, priority: 'high'},
-    { id: 3, title: 'Tarea 3', description: 'Descripción de la tarea 3' , isCompleted: true, priority: 'low'}
-  ]);
+  protected readonly tasks = signal<Map<number, Task>>(new Map());
+
+  protected addTask(task: Task): void {
+    this.tasks.update((prevMap) => {
+      const newMap = new Map(prevMap);
+      newMap.set(task.id, task);
+      return newMap;
+    });
+  }
+
+  protected removeTask(taskId: number): void {
+    this.tasks.update((prevMap) => {
+      const newMap = new Map(prevMap);
+      newMap.delete(taskId);
+      return newMap;
+    });
+  }
+
+protected toggleTaskCompletion(taskId: number): void {
+  this.tasks.update(prevMap => {
+    const newMap = new Map(prevMap);
+    const task = newMap.get(taskId);
+
+    if (task) {
+      newMap.set(taskId, {
+        ...task,
+        isCompleted: !task.isCompleted
+      });
+    }
+
+    return newMap;
+  });
+}
 }

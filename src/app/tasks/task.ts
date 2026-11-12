@@ -1,9 +1,9 @@
 export interface Task {
-  id: number;
-  title: string;
-  description: string;
-  priority: Priority;
-  isCompleted: boolean;
+  readonly id: number;
+  readonly title: string;
+  readonly description: string;
+  readonly priority: Priority;
+  readonly isCompleted: boolean;
 }
 
 type Priority = 'low' | 'medium' | 'high';
