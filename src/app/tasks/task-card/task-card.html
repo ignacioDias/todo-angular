@@ -7,4 +7,21 @@
   <p>{{ task().description }}</p>
   <p>Priority: {{ task().priority }}</p>
   <p>Completed: {{ task().isCompleted }}</p>
+  <div class="task-actions">
+    <button type="button" class="edit" aria-label="Editar tarea">
+      <mat-icon aria-hidden="true">edit</mat-icon>
+    </button>
+    <button type="button" class="delete" aria-label="Eliminar tarea">
+      <mat-icon aria-hidden="true">delete</mat-icon>
+    </button>
+    @if (!task().isCompleted) {
+      <button type="button" class="complete" aria-label="Completar tarea">
+        <mat-icon aria-hidden="true">check</mat-icon>
+      </button>
+    } @else {
+      <button type="button" class="incomplete" aria-label="Marcar como incompleta">
+        <mat-icon aria-hidden="true">cancel</mat-icon>
+      </button>
+    }
+  </div>
 </div>
