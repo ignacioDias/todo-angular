@@ -10,4 +10,8 @@
   <button type="button" class="delete-tasks">Eliminar Tareas</button>
 </div>
 
-<app-task-dialog (saved)="onTaskSaved($event)" />
+<app-task-dialog
+  [open]="isDialogOpen()"
+  (openChange)="isDialogOpen.set($event)"
+  (saved)="onTaskSaved($event)"
+/>

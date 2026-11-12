@@ -1,6 +1,7 @@
-import { Component, output, viewChild } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Task } from '../tasks/task';
 import { TaskDialog } from '../tasks/task-dialog/task-dialog';
+import { TaskStore } from '../tasks/task-store';
 
 @Component({
   imports: [TaskDialog],
@@ -9,14 +10,14 @@ import { TaskDialog } from '../tasks/task-dialog/task-dialog';
   templateUrl: './header.html',
 })
 export class Header {
-  protected readonly taskCreated = output<Task>();
-  private readonly taskDialog = viewChild.required(TaskDialog);
+  private readonly taskStore = inject(TaskStore);
+  protected readonly isDialogOpen = signal(false);
 
   protected openTaskDialog(): void {
-    this.taskDialog().open();
+    this.isDialogOpen.set(true);
   }
 
   protected onTaskSaved(task: Task): void {
-    this.taskCreated.emit(task);
+    this.taskStore.addTask(task);
   }
 }

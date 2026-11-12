@@ -9,4 +9,9 @@
   }
 </div>
 
-<app-task-dialog (saved)="onTaskSaved($event)" />
+<app-task-dialog
+  [open]="editDialogOpen()"
+  [task]="editingTask()"
+  (openChange)="onEditDialogOpenChange($event)"
+  (saved)="onTaskSaved($event)"
+/>

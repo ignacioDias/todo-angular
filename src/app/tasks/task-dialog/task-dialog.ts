@@ -1,4 +1,14 @@
-import { Component, ElementRef, computed, output, signal, viewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  computed,
+  effect,
+  input,
+  model,
+  output,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Task } from '../task';
 
@@ -9,12 +19,13 @@ import { Task } from '../task';
   templateUrl: './task-dialog.html',
 })
 export class TaskDialog {
+  readonly task = input<Task | null>(null);
+  readonly open = model(false);
   readonly saved = output<Task>();
 
-  private readonly editingTask = signal<Task | null>(null);
   private readonly taskDialog = viewChild.required<ElementRef<HTMLDialogElement>>('taskDialog');
 
-  protected readonly isEditing = computed(() => this.editingTask() !== null);
+  protected readonly isEditing = computed(() => this.task() !== null);
   protected readonly submitAttempted = signal(false);
   protected readonly taskForm = new FormGroup({
     id: new FormControl<number | null>(null, Validators.required),
@@ -23,15 +34,20 @@ export class TaskDialog {
     priority: new FormControl<Task['priority'] | null>(null, Validators.required),
   });
 
-  open(task: Task | null = null): void {
-    this.editingTask.set(task);
-    this.submitAttempted.set(false);
-    this.resetForm(task);
+  constructor() {
+    effect(() => {
+      const dialog = this.taskDialog().nativeElement;
 
-    const dialog = this.taskDialog().nativeElement;
-    if (!dialog.open) {
-      dialog.showModal();
-    }
+      if (this.open()) {
+        if (!dialog.open) {
+          this.submitAttempted.set(false);
+          this.resetForm(this.task());
+          dialog.showModal();
+        }
+      } else if (dialog.open) {
+        dialog.close();
+      }
+    });
   }
 
   protected onSubmit(): void {
@@ -51,20 +67,17 @@ export class TaskDialog {
       title,
       description,
       priority,
-      isCompleted: this.editingTask()?.isCompleted ?? false,
+      isCompleted: this.task()?.isCompleted ?? false,
     });
     this.close();
   }
 
   protected close(): void {
-    const dialog = this.taskDialog().nativeElement;
-    if (dialog.open) {
-      dialog.close();
-    }
+    this.open.set(false);
   }
 
   protected onDialogClose(): void {
-    this.editingTask.set(null);
+    this.open.set(false);
     this.submitAttempted.set(false);
     this.resetForm(null);
   }
