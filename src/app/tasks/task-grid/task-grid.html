@@ -1,6 +1,6 @@
 <div class="task-grid">
   @for (task of tasks().entries(); track task[0]) {
-    <app-task-card [task]="task[1]"/>
+    <app-task-card [task]="task[1]" (edit)="onEditTask($event)" />
   } @empty {
      <div class="empty-state">
         <h3>No tasks</h3>
@@ -8,3 +8,5 @@
       </div>
   }
 </div>
+
+<app-task-dialog (saved)="onTaskSaved($event)" />

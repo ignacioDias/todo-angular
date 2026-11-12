@@ -53,6 +53,11 @@ app-root {
   display: block;
 }
 
+/* Lock page scrolling while a modal dialog is open */
+body:has(dialog[open]) {
+  overflow: hidden;
+}
+
 ::selection {
   background: color-mix(in srgb, var(--accent) 22%, transparent);
 }

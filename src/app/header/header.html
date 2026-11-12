@@ -1,4 +1,13 @@
 <div role="toolbar" class="toolbar">
-  <button type="button" class="new-task">Crear Tarea</button>
+  <button
+    type="button"
+    class="new-task"
+    aria-haspopup="dialog"
+    (click)="openTaskDialog()"
+  >
+    Crear Tarea
+  </button>
   <button type="button" class="delete-tasks">Eliminar Tareas</button>
 </div>
+
+<app-task-dialog (saved)="onTaskSaved($event)" />

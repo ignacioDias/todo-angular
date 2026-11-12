@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { Task } from '../task';
-import { input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 @Component({
   imports: [MatIconModule],
@@ -10,4 +9,5 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class TaskCard {
   readonly task = input.required<Task>();
+  readonly edit = output<Task>();
 }
