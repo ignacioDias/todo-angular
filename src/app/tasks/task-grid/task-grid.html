@@ -1,1 +1,10 @@
-<p>task-grid works!</p>
+<div class="task-grid">
+  @for (task of tasks(); track task.id) {
+    <app-task-card [task]="task"/>
+  } @empty {
+     <div class="empty-state">
+        <h3>No tasks</h3>
+        <p>Create tasks to get started.</p>
+      </div>
+  }
+</div>

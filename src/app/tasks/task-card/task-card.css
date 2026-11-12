@@ -1,0 +1,172 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.task-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  height: 100%;
+  padding: 1.35rem 1.35rem 1.25rem 1.55rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.task-card::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 5px;
+  background: var(--priority, var(--line));
+}
+
+.task-card[data-priority='high'] {
+  --priority: var(--priority-high);
+}
+
+.task-card[data-priority='medium'] {
+  --priority: var(--priority-medium);
+}
+
+.task-card[data-priority='low'] {
+  --priority: var(--priority-low);
+}
+
+.task-card:hover {
+  border-color: color-mix(in srgb, var(--ink) 22%, var(--line));
+  box-shadow:
+    0 1px 2px rgb(23 26 31 / 0.06),
+    0 20px 30px -26px rgb(23 26 31 / 0.55);
+}
+
+.task-card h1 {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 1.2rem + 0.4vw, 1.6rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  overflow-wrap: break-word;
+}
+
+.task-card p {
+  margin: 0;
+}
+
+/* Description */
+.task-card > p:nth-of-type(1) {
+  max-width: 58ch;
+  color: var(--ink-muted);
+  font-size: 0.93rem;
+  line-height: 1.55;
+  overflow-wrap: break-word;
+}
+
+/* Priority chip */
+.task-card > p:nth-of-type(2) {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  margin-top: auto;
+  padding: 0.22rem 0.55rem;
+  border: 1px solid color-mix(in srgb, var(--priority, var(--ink-muted)) 30%, white);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--priority, var(--ink-muted)) 9%, white);
+  color: var(--priority, var(--ink-muted));
+  font-size: 0.76rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.005em;
+  text-transform: capitalize;
+}
+
+/* Completion status */
+.task-card > p:nth-of-type(3) {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 0.4rem;
+  color: var(--ink-muted);
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.task-card > p:nth-of-type(3)::before {
+  content: '';
+  flex: none;
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--ink-muted) 55%, white);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ink-muted) 12%, transparent);
+}
+
+/* ------------------------------- Completed -------------------------------- */
+.task-card.is-completed {
+  background: color-mix(in srgb, var(--priority-low) 10%, var(--surface));
+  border-color: color-mix(in srgb, var(--priority-low) 30%, var(--surface));
+  box-shadow: none;
+}
+
+.task-card.is-completed:hover {
+  border-color: color-mix(in srgb, var(--priority-low) 42%, var(--surface));
+  box-shadow: none;
+}
+
+/* Perforated spine, like a filed-away ticket */
+.task-card.is-completed::before {
+  background: repeating-linear-gradient(to bottom, var(--priority-low) 0 6px, transparent 6px 12px);
+  opacity: 0.5;
+}
+
+/* Decorative check seal */
+.task-card.is-completed::after {
+  content: '';
+  position: absolute;
+  top: 1.05rem;
+  right: 1.05rem;
+  width: 1.6rem;
+  height: 1.6rem;
+  border: 1px solid color-mix(in srgb, var(--priority-low) 35%, var(--surface));
+  border-radius: 50%;
+  background-color: color-mix(in srgb, var(--priority-low) 12%, var(--surface));
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231f574b' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 0.8rem;
+}
+
+.task-card.is-completed h1 {
+  padding-right: 2.1rem;
+  color: color-mix(in srgb, var(--ink-muted) 70%, var(--priority-low));
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+  text-decoration-color: color-mix(in srgb, var(--priority-low) 55%, transparent);
+}
+
+/* Filled status chip replaces the quiet dot-and-text line */
+.task-card.is-completed > p:nth-of-type(3) {
+  padding: 0.16rem 0.55rem;
+  border-radius: 999px;
+  background: var(--priority-low);
+  color: #ffffff;
+  font-size: 0.76rem;
+  font-weight: 600;
+}
+
+.task-card.is-completed > p:nth-of-type(3)::before {
+  width: 0.38rem;
+  height: 0.38rem;
+  background: #ffffff;
+  box-shadow: none;
+}
