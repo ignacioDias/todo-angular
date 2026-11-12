@@ -1,6 +1,11 @@
 <div class="task-grid">
   @for (task of tasks().entries(); track task[0]) {
-    <app-task-card [task]="task[1]" (edit)="onEditTask($event)" />
+    <app-task-card
+      [task]="task[1]"
+      (edit)="onEditTask($event)"
+      (remove)="onRemoveTask($event)"
+      (toggleCompletion)="onToggleTaskCompletion($event)"
+    />
   } @empty {
      <div class="empty-state">
         <h3>No tasks</h3>

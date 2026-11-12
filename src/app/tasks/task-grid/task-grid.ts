@@ -31,4 +31,12 @@ export class TaskGrid {
   protected onTaskSaved(task: Task): void {
     this.taskStore.updateTask(task);
   }
+
+  protected onRemoveTask(taskId: number): void {
+    this.taskStore.removeTask(taskId);
+  }
+
+  protected onToggleTaskCompletion(taskId: number): void {
+    this.taskStore.toggleTaskCompletion(taskId);
+  }
 }

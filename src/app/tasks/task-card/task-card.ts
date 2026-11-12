@@ -10,4 +10,6 @@ import { MatIconModule } from '@angular/material/icon';
 export class TaskCard {
   readonly task = input.required<Task>();
   readonly edit = output<Task>();
+  readonly remove = output<number>();
+  readonly toggleCompletion = output<number>();
 }
