@@ -1,16 +1,72 @@
+<div class="filters">
+  <section class="task-filters" aria-label="Filtros de tareas">
+    <label class="filter-field filter-search">
+      <span class="filter-label">Buscar</span>
+      <span class="search-control">
+        <mat-icon aria-hidden="true">search</mat-icon>
+        <input
+          type="search"
+          placeholder="Título o descripción"
+          autocomplete="off"
+          [value]="searchTerm()"
+          (input)="onSearchInput($event)"
+        />
+      </span>
+    </label>
+
+    <label class="filter-field">
+      <span class="filter-label">Prioridad</span>
+      <select [value]="priorityFilter()" (change)="onPriorityFilterChange($event)">
+        <option value="all">Todas</option>
+        <option value="high">Alta</option>
+        <option value="medium">Media</option>
+        <option value="low">Baja</option>
+      </select>
+    </label>
+
+    <label class="filter-field">
+      <span class="filter-label">Estado</span>
+      <select [value]="statusFilter()" (change)="onStatusFilterChange($event)">
+        <option value="all">Todas</option>
+        <option value="pending">Pendientes</option>
+        <option value="completed">Completadas</option>
+      </select>
+    </label>
+
+    <div class="filter-footer">
+      <p class="filter-summary" role="status" aria-live="polite">{{ resultsLabel() }}</p>
+      @if (hasActiveFilters()) {
+        <button type="button" class="clear-filters" (click)="clearFilters()">
+          Limpiar filtros
+        </button>
+      }
+    </div>
+  </section>
+</div>
+
 <div class="task-grid">
-  @for (task of tasks().entries(); track task[0]) {
+  @for (task of filteredTasks(); track task.id) {
     <app-task-card
-      [task]="task[1]"
+      [task]="task"
       (edit)="onEditTask($event)"
       (remove)="onRemoveTask($event)"
       (toggleCompletion)="onToggleTaskCompletion($event)"
     />
   } @empty {
-     <div class="empty-state">
+    @if (tasks().size === 0) {
+      <div class="empty-state">
         <h3>No tasks</h3>
         <p>Create tasks to get started.</p>
       </div>
+    } @else {
+      <div class="empty-state">
+        <h3>Sin resultados</h3>
+        <p>Ninguna tarea coincide con los filtros actuales.</p>
+        <button type="button" class="clear-filters" (click)="clearFilters()">
+          Limpiar filtros
+        </button>
+      </div>
+    }
   }
 </div>
 

@@ -8,7 +8,8 @@ A small task manager built with Angular 22. Tasks can be created, edited, comple
 - Edit existing tasks in the same dialog
 - Mark tasks as complete or incomplete
 - Delete tasks
-- Empty state when no tasks exist
+- Filter the grid by text (title or description), priority, and completion status
+- Empty states for no tasks and for filters with no matches
 - Light and dark themes with a toolbar toggle, system preference detection, and persistence
 - Keyboard-accessible native `<dialog>` with focus handling and reduced-motion support
 
@@ -65,7 +66,7 @@ src/
 │   └── tasks/
 │       ├── task.ts               # Task model and priority type
 │       ├── task-store.ts         # Signal-based in-memory task store
-│       ├── task-grid/            # Grid of task cards + empty state
+│       ├── task-grid/            # Grid of task cards, filter bar + empty states
 │       ├── task-card/            # Single task with edit / delete / complete actions
 │       └── task-dialog/          # Create and edit dialog (reactive form)
 ├── material-theme.scss
