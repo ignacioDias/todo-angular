@@ -37,26 +37,49 @@
     transform 0.18s ease;
 }
 
-.new-task {
-  background: var(--ink);
-  color: #ffffff;
+.toolbar .new-task {
+  background: var(--solid);
+  color: var(--solid-ink);
   box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.12),
-    0 6px 14px -8px rgb(23 26 31 / 0.8);
+    inset 0 1px 0 light-dark(rgb(255 255 255 / 0.12), rgb(0 0 0 / 0.12)),
+    0 6px 14px -8px color-mix(in srgb, var(--shadow-color) 80%, transparent);
 }
 
-.new-task:hover {
-  background: #000000;
+.toolbar .new-task:hover {
+  background: var(--solid-hover);
   transform: translateY(-1px);
 }
 
-.delete-tasks {
+.toolbar .theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  padding: 0;
+  border-color: var(--line);
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.toolbar .theme-toggle:hover {
+  border-color: color-mix(in srgb, var(--ink) 28%, var(--line));
+  background: var(--surface-muted);
+}
+
+.toolbar .theme-toggle mat-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.toolbar .delete-tasks {
   background: transparent;
   border-color: color-mix(in srgb, var(--danger) 32%, transparent);
   color: var(--danger);
 }
 
-.delete-tasks:hover {
+.toolbar .delete-tasks:hover {
   background: color-mix(in srgb, var(--danger) 10%, transparent);
   border-color: color-mix(in srgb, var(--danger) 55%, transparent);
 }
@@ -73,6 +96,15 @@
 @media (max-width: 30rem) {
   .toolbar {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr auto;
+  }
+
+  .toolbar button {
+    padding-inline: 0.65rem;
+    font-size: 0.85rem;
+  }
+
+  .toolbar .theme-toggle {
+    padding-inline: 0;
   }
 }

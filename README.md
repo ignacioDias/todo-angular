@@ -9,6 +9,7 @@ A small task manager built with Angular 22. Tasks can be created, edited, comple
 - Mark tasks as complete or incomplete
 - Delete tasks
 - Empty state when no tasks exist
+- Light and dark themes with a toolbar toggle, system preference detection, and persistence
 - Keyboard-accessible native `<dialog>` with focus handling and reduced-motion support
 
 The interface copy is in Spanish.
@@ -58,7 +59,9 @@ src/
 │   ├── app.ts                    # Root component
 │   ├── app.config.ts             # Application providers (router, error listeners)
 │   ├── app.routes.ts             # Route definitions (currently empty)
-│   ├── header/                   # Toolbar with the "Crear Tarea" action
+│   ├── header/                   # Toolbar with task actions and the theme toggle
+│   ├── theme/
+│   │   └── theme-store.ts        # Light/dark theme state + persistence
 │   └── tasks/
 │       ├── task.ts               # Task model and priority type
 │       ├── task-store.ts         # Signal-based in-memory task store
@@ -75,6 +78,12 @@ src/
 `TaskStore` is a root service holding tasks in a `signal<Map<number, Task>>`. It exposes `addTask`, `updateTask`, `removeTask`, and `toggleTaskCompletion`, all of which replace the map immutably so signal consumers update correctly. Components inject the store and read the `tasks` signal directly.
 
 Because the store lives in memory, tasks are not persisted between reloads.
+
+## Theming
+
+The app ships with light and dark palettes. `ThemeStore` resolves the initial theme from the `todo-theme` localStorage entry or the system `prefers-color-scheme` setting, and writes `data-theme="light|dark"` on `<html>`. The toolbar toggle flips the theme and remembers the choice.
+
+Design tokens live in `src/styles.css` and use CSS `light-dark()` so a single declaration covers both palettes. Angular Material's system tokens follow the same `color-scheme`, so Material components switch automatically.
 
 ## Code scaffolding
 

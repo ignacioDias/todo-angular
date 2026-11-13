@@ -43,8 +43,8 @@
 .task-card:hover {
   border-color: color-mix(in srgb, var(--ink) 22%, var(--line));
   box-shadow:
-    0 1px 2px rgb(23 26 31 / 0.06),
-    0 20px 30px -26px rgb(23 26 31 / 0.55);
+    0 1px 2px color-mix(in srgb, var(--shadow-color) 6%, transparent),
+    0 20px 30px -26px color-mix(in srgb, var(--shadow-color) 55%, transparent);
 }
 
 .task-card h1 {
@@ -77,9 +77,9 @@
   align-items: center;
   align-self: flex-start;
   padding: 0.22rem 0.55rem;
-  border: 1px solid color-mix(in srgb, var(--priority, var(--ink-muted)) 30%, white);
+  border: 1px solid color-mix(in srgb, var(--priority, var(--ink-muted)) 30%, var(--surface));
   border-radius: 999px;
-  background: color-mix(in srgb, var(--priority, var(--ink-muted)) 9%, white);
+  background: color-mix(in srgb, var(--priority, var(--ink-muted)) 9%, var(--surface));
   color: var(--priority, var(--ink-muted));
   font-size: 0.76rem;
   font-weight: 600;
@@ -106,7 +106,7 @@
   width: 0.42rem;
   height: 0.42rem;
   border-radius: 50%;
-  background: color-mix(in srgb, var(--ink-muted) 55%, white);
+  background: color-mix(in srgb, var(--ink-muted) 55%, var(--surface));
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--ink-muted) 12%, transparent);
 }
 
@@ -214,20 +214,21 @@
 }
 
 /* Decorative check seal */
-.task-card.is-completed::after {
-  content: '';
+.completed-seal {
   position: absolute;
   top: 1.05rem;
   right: 1.05rem;
+  display: grid;
+  place-items: center;
   width: 1.6rem;
   height: 1.6rem;
   border: 1px solid color-mix(in srgb, var(--priority-low) 35%, var(--surface));
   border-radius: 50%;
-  background-color: color-mix(in srgb, var(--priority-low) 12%, var(--surface));
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231f574b' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 0.8rem;
+  background: color-mix(in srgb, var(--priority-low) 12%, var(--surface));
+  color: var(--priority-low);
+  font-size: 1rem;
+  line-height: 1;
+  pointer-events: none;
 }
 
 .task-card.is-completed h1 {
@@ -243,7 +244,7 @@
   padding: 0.16rem 0.55rem;
   border-radius: 999px;
   background: var(--priority-low);
-  color: #ffffff;
+  color: var(--on-priority-low);
   font-size: 0.76rem;
   font-weight: 600;
 }
@@ -251,7 +252,7 @@
 .task-card.is-completed > p:nth-of-type(3)::before {
   width: 0.38rem;
   height: 0.38rem;
-  background: #ffffff;
+  background: var(--on-priority-low);
   box-shadow: none;
 }
 

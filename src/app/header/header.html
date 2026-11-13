@@ -1,4 +1,4 @@
-<div role="toolbar" class="toolbar">
+<div role="toolbar" class="toolbar" aria-label="Acciones de la aplicación">
   <button
     type="button"
     class="new-task"
@@ -8,6 +8,14 @@
     Crear Tarea
   </button>
   <button type="button" class="delete-tasks">Eliminar Tareas</button>
+  <button
+    type="button"
+    class="theme-toggle"
+    [attr.aria-label]="themeStore.isDark() ? 'Activar modo claro' : 'Activar modo oscuro'"
+    (click)="toggleTheme()"
+  >
+    <mat-icon aria-hidden="true">{{ themeStore.isDark() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+  </button>
 </div>
 
 <app-task-dialog

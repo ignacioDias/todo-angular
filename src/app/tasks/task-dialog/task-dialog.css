@@ -12,8 +12,8 @@
   background: var(--surface);
   color: var(--ink);
   box-shadow:
-    0 1px 2px rgb(23 26 31 / 0.08),
-    0 32px 64px -24px rgb(23 26 31 / 0.55);
+    0 1px 2px color-mix(in srgb, var(--shadow-color) 8%, transparent),
+    0 32px 64px -24px color-mix(in srgb, var(--shadow-color) 55%, transparent);
   overflow: auto;
   overscroll-behavior: contain;
 }
@@ -23,7 +23,7 @@
 }
 
 .task-dialog::backdrop {
-  background: rgb(23 26 31 / 0.42);
+  background: var(--backdrop);
   backdrop-filter: blur(3px) saturate(1.1);
   animation: backdrop-enter 0.22s ease both;
 }
@@ -131,7 +131,7 @@
 .field input:focus-visible,
 .field select:focus-visible {
   border-color: var(--accent);
-  background: var(--surface);
+  background-color: var(--surface);
 }
 
 .field input.ng-invalid.ng-touched,
@@ -162,16 +162,22 @@
 
 .field select {
   padding-right: 2.4rem;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235b626d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--ink-muted) 50%),
+    linear-gradient(135deg, var(--ink-muted) 50%, transparent 50%);
   background-repeat: no-repeat;
-  background-position: right 0.75rem center;
-  background-size: 0.85rem;
+  background-position:
+    calc(100% - 1.15rem) calc(50% - 0.08rem),
+    calc(100% - 0.83rem) calc(50% - 0.08rem);
+  background-size:
+    0.32rem 0.32rem,
+    0.32rem 0.32rem;
   appearance: none;
   cursor: pointer;
 }
 
 .field select:invalid {
-  color: color-mix(in srgb, var(--ink-muted) 68%, white);
+  color: color-mix(in srgb, var(--ink-muted) 68%, var(--surface));
 }
 
 .field select option {
@@ -235,15 +241,15 @@
 }
 
 .dialog-actions .primary {
-  background: var(--ink);
-  color: #ffffff;
+  background: var(--solid);
+  color: var(--solid-ink);
   box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.12),
-    0 6px 14px -8px rgb(23 26 31 / 0.8);
+    inset 0 1px 0 light-dark(rgb(255 255 255 / 0.12), rgb(0 0 0 / 0.12)),
+    0 6px 14px -8px color-mix(in srgb, var(--shadow-color) 80%, transparent);
 }
 
 .dialog-actions .primary:hover {
-  background: #000000;
+  background: var(--solid-hover);
   transform: translateY(-1px);
 }
 

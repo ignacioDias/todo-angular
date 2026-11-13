@@ -7,6 +7,9 @@
   <p>{{ task().description }}</p>
   <p>Priority: {{ task().priority }}</p>
   <p>Completed: {{ task().isCompleted }}</p>
+  @if (task().isCompleted) {
+    <mat-icon class="completed-seal" aria-hidden="true">check</mat-icon>
+  }
   <div class="task-actions">
     <button type="button" class="edit" aria-label="Editar tarea" (click)="edit.emit(task())">
       <mat-icon aria-hidden="true">edit</mat-icon>

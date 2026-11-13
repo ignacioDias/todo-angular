@@ -5,23 +5,48 @@
    Design tokens
    --------------------------------------------------------------------------- */
 :root {
-  --canvas: #edeff3;
-  --surface: #ffffff;
-  --surface-muted: #f7f8fa;
-  --ink: #191c21;
-  --ink-muted: #5b626d;
-  --line: #d8dce3;
-  --accent: #2456c7;
-  --danger: #a03424;
+  color-scheme: light;
 
-  --priority-high: #93301c;
-  --priority-medium: #7a4f06;
-  --priority-low: #1f574b;
+  --canvas: light-dark(#edeff3, #0e1116);
+  --surface: light-dark(#ffffff, #181c22);
+  --surface-muted: light-dark(#f7f8fa, #20252d);
+  --ink: light-dark(#191c21, #e9ecf1);
+  --ink-muted: light-dark(#5b626d, #a0a8b4);
+  --line: light-dark(#d8dce3, #3a424f);
+  --accent: light-dark(#2456c7, #8aabff);
+  --danger: light-dark(#a03424, #ff9d8c);
+
+  --priority-high: light-dark(#93301c, #ff9d8c);
+  --priority-medium: light-dark(#7a4f06, #eab866);
+  --priority-low: light-dark(#1f574b, #6fd6be);
+
+  /* Solid surfaces (primary buttons) invert between themes. */
+  --solid: light-dark(#191c21, #e9ecf1);
+  --solid-hover: light-dark(#000000, #ffffff);
+  --solid-ink: light-dark(#ffffff, #0e1116);
+  --on-priority-low: light-dark(#ffffff, #06231d);
+
+  --shadow-color: light-dark(rgb(23 26 31), rgb(0 0 0));
+  --shadow-card:
+    0 1px 2px color-mix(in srgb, var(--shadow-color) 5%, transparent),
+    0 16px 24px -24px color-mix(in srgb, var(--shadow-color) 45%, transparent);
+  --backdrop: light-dark(rgb(23 26 31 / 0.42), rgb(0 0 0 / 0.66));
+  --dot-color: light-dark(rgb(25 28 33 / 0.07), rgb(233 236 241 / 0.1));
 
   --radius: 10px;
   --font-ui: 'Instrument Sans', 'Roboto', system-ui, sans-serif;
   --font-display: 'Instrument Serif', Georgia, 'Times New Roman', serif;
-  --shadow-card: 0 1px 2px rgb(23 26 31 / 0.05), 0 16px 24px -24px rgb(23 26 31 / 0.45);
+}
+
+/* Follow the system until the user picks an explicit theme. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
 }
 
 /* ---------------------------------------------------------------------------
@@ -35,13 +60,14 @@
 
 html {
   height: 100%;
+  background-color: var(--canvas);
 }
 
 body {
   min-height: 100%;
   margin: 0;
   background-color: var(--canvas);
-  background-image: radial-gradient(circle at 1px 1px, rgb(25 28 33 / 0.07) 1px, transparent 0);
+  background-image: radial-gradient(circle at 1px 1px, var(--dot-color) 1px, transparent 0);
   background-size: 22px 22px;
   color: var(--ink);
   font-family: var(--font-ui);
